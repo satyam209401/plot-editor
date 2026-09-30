@@ -1,222 +1,101 @@
-# 🗺️ React 2D CAD Plot & Township Map Studio
+# React 2D CAD Plot Map Studio
 
-A modern, high-precision **2D CAD Real Estate Master Plan & Township Layout Studio** built with React and SVG. It provides an AutoCAD / Photoshop-style layout editor alongside a client-facing interactive master plan viewer.
+A powerful, interactive 2D Map Editor and Viewer built with React. This tool allows you to design real estate plot layouts, roads, trees, and other infrastructure, and export the data to display in a client-facing viewer.
 
-Components are **100% modular and decoupled** with separate CSS styles, allowing you to drop either component directly into any external React application.
+## 🚀 Overview
 
----
+This project consists of two main components:
+1. **Plot Editor (`PlotEditor.jsx`)**: An interactive "Photoshop-like" studio to draw polygons (plots), roads, place trees, and assign properties (price, description, status) to plots.
+2. **Plot Viewer (`PlotViewer.jsx`)**: A read-only interactive map designed for end-users or clients to explore the layout, click on plots, and view details.
 
-## 🌟 Key Features
+## 📂 Folder Structure
 
-### 1. 🖌️ Photoshop CAD Studio Editor (`PlotEditor.jsx`)
-- **Drag & Drop Palette**: Drag plots, roads, tree stamps, compass roses, and text directly onto the SVG canvas.
-- **Micro-Precision Grid (4px)**: Ultra-fine graph paper grid with automatic snap-to-grid alignment.
-- **Smart Spline Roads**: Smooth Catmull-Rom spline curves where the road passes directly through every control node without drifting.
-- **Segment-Aware Road Labels**: Intelligent text splitting across corner/L-turn road segments, keeping corner vertices completely free of text collisions.
-- **Midpoint Node Addition**: Interactive `+` buttons on plot edges and road segments to insert new nodes and create custom polygon shapes.
-- **Corner Reshaping**: Grab and drag any corner vertex to modify plot dimensions; double-click any node to delete it.
-- **Right Inspector Panel**: Real-time property editor for Plot Numbers, SQ.YD Area, Dimensions, Fill Colors, and Status (Available, Booked, Sold).
-- **History Stack**: Full Undo/Redo support (`Ctrl+Z` / `Ctrl+Y`).
-- **Data Export**: Live JSON export and copy-to-clipboard functionality.
-
-### 2. 👁️ Interactive Client Master Plan Viewer (`PlotViewer.jsx`)
-- **Interactive SVG Map**: Real-time high-resolution vector layout rendering with support for underlying raster site maps.
-- **Instant Search & Status Filter**: Search plots by Plot Number or Area; filter by Available, Booked, or Sold status with live count badges.
-- **Plot Inspection Card**: Click any plot to view its exact area, dimensions, status, and pricing rate.
-- **CAD Schedule Matrix Table**: Comprehensive tabular list of all plots and dimensions.
-- **Clean Inside-Box Typography**: Centered, readable white plot numbers and square-yard sublabels.
-- **Background Tap Deselection**: Tap or click any empty background area to instantly clear active plot selections.
-
----
-
-## 📁 Visual Folder Structure
-
-```
-2D-Map/
-├── .gitignore                   # Excludes node_modules, build outputs, and logs
-├── index.html                   # HTML5 entry template
-├── package.json                 # Project dependencies and script definitions
-├── README.md                    # In-depth project documentation
-├── vite.config.js               # Vite bundler configuration
-└── src/
-    ├── App.jsx                  # Main application shell with tab switcher
-    ├── index.css                # Shell layout & global font tokens
-    ├── main.jsx                 # React root DOM mount entry
-    │
-    ├── PlotViewer.jsx           # Standalone Interactive 2D Map Viewer component
-    ├── PlotViewer.css           # Standalone CSS for PlotViewer (zero outside dependencies)
-    │
-    ├── PlotEditor.jsx           # Standalone CAD Studio Editor component
-    ├── PlotEditor.css           # Standalone CSS for PlotEditor (zero outside dependencies)
-    │
-    ├── utils/
-    │   └── mapUtils.js          # Shared Catmull-Rom splines, road paths & geometry helpers
-    │
-    └── data/
-        └── samplePlots.json     # Sample master township dataset for quick start
+```text
+plot-editor/
+├── public/                 # Static assets
+├── src/
+│   ├── utils/
+│   │   └── mapUtils.js     # Core geometry math and SVG path generation logic
+│   ├── App.jsx             # Main container managing state between Editor and Viewer
+│   ├── index.css           # Global styles and UI themes
+│   ├── main.jsx            # React entry point
+│   ├── PlotEditor.jsx      # The Workspace for designing the layout
+│   └── PlotViewer.jsx      # The Client Viewer for exploring the layout
+├── package.json            # Project dependencies
+└── vite.config.js          # Vite configuration
 ```
 
----
+## 🛠️ Installation & Setup
 
-## 📦 How to Use in External React Projects
+1. **Install Dependencies:**
+   Ensure you have Node.js installed, then run:
+   ```bash
+   npm install
+   ```
 
-### Installation Method 1: Direct NPM install from GitHub (Recommended)
+2. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` (or the URL provided in the terminal) in your browser.
+
+## 📖 How to Use the Editor
+
+- **Draw Plots:** Select the Plot tool and click on the canvas to drop points. Press `Enter` to close the polygon shape.
+- **Draw Roads:** Select the Road tool and click to draw paths. Adjust the width from the properties panel.
+- **Add Trees:** Select the Tree tool and click anywhere to place trees.
+- **Edit Properties:** Click on any drawn plot using the Select tool to open its properties. Here you can set the Plot Number, Status (Available/Booked), Price Rate, Description, and Color Theme.
+
+## 📦 How to Integrate Viewer into Another Project
+
+If you want to show the map to customers on a different website (without giving them edit access), follow these steps:
+
+1. **Export Data:** 
+   Copy the final JSON data generated by the editor.
+
+2. **Copy Required Files:**
+   Copy the following files into your target project:
+   - `src/PlotViewer.jsx`
+   - `src/utils/mapUtils.js`
+   - Relevant CSS classes from `index.css`
+
+3. **Install Dependencies:**
+   The viewer requires `lucide-react` for icons.
+   ```bash
+   npm install lucide-react
+   ```
+
+4. **Implementation:**
+   ```jsx
+   import React from 'react';
+   import PlotViewer from './PlotViewer';
+   import mapData from './mapData.json'; // The JSON data from the editor
+
+   function App() {
+     // Ye function tab chalega jab koi plot par click karega
+     const handlePlotClick = (plotData) => {
+       console.log("Clicked Plot Details:", plotData);
+       // Aap yahan apna Modal open kar sakte hain ya API call kar sakte hain
+       // plotData me plot.plotNo, plot.price, plot.areaSqYard sab milega
+     };
+
+     return (
+       <div style={{ width: '100vw', height: '100vh' }}>
+         <PlotViewer 
+            data={mapData} 
+            onPlotSelect={handlePlotClick} 
+         />
+       </div>
+     );
+   }
+
+   export default App;
+   ```
+
+## 🔒 Production Deployment
+
+To build the app for production, run:
 ```bash
-npm install git+https://github.com/satyam209401/plot-editor.git
-```
-Then import directly:
-```jsx
-import { PlotViewer, PlotEditor } from 'react-2d-plot-map';
-```
-
-### Installation Method 2: Copy-Paste Components
-Copy `PlotViewer.jsx`, `PlotViewer.css`, `PlotEditor.jsx`, `PlotEditor.css`, and `utils/mapUtils.js` into your project.
-
----
-
-### 👁️ Using the Interactive Viewer (`PlotViewer`)
-
-```jsx
-import React from 'react';
-import { PlotViewer } from 'react-2d-plot-map'; // or import PlotViewer from './PlotViewer';
-
-export default function MasterPlanPage() {
-  const handlePlotSelect = (plot) => {
-    if (plot) {
-      console.log("Selected Plot:", plot.plotNo, plot.areaSqYard, plot.price);
-      // Trigger your custom modal, enquiry form, or booking drawer here!
-    } else {
-      console.log("Selection cleared");
-    }
-  };
-
-  return (
-    <div style={{ height: '100vh', width: '100vw' }}>
-      <PlotViewer 
-        data={layoutData} 
-        onPlotSelect={handlePlotSelect} 
-        showSidebar={true} // Set to false to hide built-in sidebar and show only 2D map canvas
-      />
-    </div>
-  );
-}
-```
-
-#### Viewer Props:
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `data` | `Object` | *Required* | Complete master plan layout JSON object |
-| `onPlotSelect` | `Function` | `undefined` | Callback fired when a plot is selected or cleared: `(plot) => void` |
-| `showSidebar` | `Boolean` | `true` | Show or hide the built-in property inspector sidebar |
-
-### Option B: Using the CAD Studio Editor
-
-Copy `src/PlotEditor.jsx`, `src/PlotEditor.css`, and `src/utils/mapUtils.js` into your project:
-
-```jsx
-import React, { useState } from 'react';
-import PlotEditor from './PlotEditor';
-
-export default function AdminEditorPage() {
-  const [mapData, setMapData] = useState(null);
-
-  const handleSave = (updatedLayout) => {
-    console.log("Updated layout saved:", updatedLayout);
-    // Send updatedLayout to your backend API or database
-  };
-
-  return (
-    <div style={{ height: '100vh', width: '100vw' }}>
-      <PlotEditor initialData={mapData} onSave={handleSave} />
-    </div>
-  );
-}
-```
-
----
-
-## 📊 Data Schema Reference
-
-The data object consumed by `PlotViewer` and produced by `PlotEditor` adheres to the following structure:
-
-```json
-{
-  "projectTitle": "BINGWAN CITY KANPUR",
-  "totalLandArea": "5000 SQ YARD",
-  "totalPlotArea": "3711 SQ YARD",
-  "totalRoadArea": "1614 SQ YARD",
-  "canvasWidth": 1300,
-  "canvasHeight": 900,
-  "mapImageUrl": "",
-  "compass": {
-    "x": 880,
-    "y": 250,
-    "rotation": 15
-  },
-  "roads": [
-    {
-      "id": "road-1",
-      "name": "30 FT MAIN ROAD",
-      "width": 28,
-      "color": "#475569",
-      "isSmooth": false,
-      "points": [[100, 100], [100, 400], [500, 400]]
-    }
-  ],
-  "trees": [
-    { "x": 120, "y": 60 }
-  ],
-  "plots": [
-    {
-      "id": "plot-1",
-      "plotNo": "P.N.1",
-      "areaSqYard": "100.00",
-      "dimensions": "30' x 40'",
-      "status": "available",
-      "price": "₹6,500 / SQ.YD",
-      "fillColor": "#fecaca",
-      "points": [[380, 130], [450, 130], [450, 240], [380, 240]]
-    }
-  ]
-}
-```
-
----
-
-## 🛠️ Local Development & Setup
-
-### Prerequisites
-- Node.js (version 18+ recommended)
-- npm or yarn
-
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/satyam209401/plot-editor.git
-
-# Navigate into project directory
-cd plot-editor
-
-# Install dependencies
-npm install
-```
-
-### Running Locally
-```bash
-npm run dev
-```
-Open `http://localhost:5173` in your browser.
-
-### Production Build
-```bash
-# Compile and optimize production bundle
 npm run build
-
-# Preview production build locally
-npm run preview
 ```
-
----
-
-## 📄 License
-MIT License. Free to use and integrate into personal and commercial projects.
+This will generate a `dist` folder containing the optimized build which can be hosted on Vercel, Netlify, AWS S3, or any static hosting service.
