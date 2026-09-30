@@ -1,0 +1,231 @@
+{
+  "projectTitle": "BINGWAN CITY MASTER PLAN LAYOUT",
+  "totalLandArea": "5325 SQ YARD",
+  "totalPlotArea": "3711 SQ YARD",
+  "totalRoadArea": "1614 SQ YARD",
+  "canvasWidth": 1300,
+  "canvasHeight": 900,
+  "mapImageUrl": "",
+  "compass": {
+    "x": 880,
+    "y": 250,
+    "rotation": 15
+  },
+  "roads": [
+    {
+      "id": "road-1",
+      "name": "60 FT MAIN ROAD",
+      "width": 60,
+      "color": "#475569",
+      "points": [[100, 100], [1150, 100]]
+    },
+    {
+      "id": "road-2",
+      "name": "25 FT ACCESS ROAD",
+      "width": 35,
+      "color": "#475569",
+      "points": [[350, 100], [350, 750]]
+    },
+    {
+      "id": "road-3",
+      "name": "20 FT INTERNAL ROAD",
+      "width": 28,
+      "color": "#475569",
+      "points": [[350, 420], [900, 420]]
+    },
+    {
+      "id": "road-4",
+      "name": "20 FT INTERNAL ROAD B",
+      "width": 28,
+      "color": "#475569",
+      "points": [[350, 620], [900, 620]]
+    }
+  ],
+  "trees": [
+    {"x": 120, "y": 60}, {"x": 250, "y": 60}, {"x": 450, "y": 60}, {"x": 650, "y": 60},
+    {"x": 850, "y": 60}, {"x": 1050, "y": 60}, {"x": 310, "y": 200}, {"x": 310, "y": 350},
+    {"x": 310, "y": 500}, {"x": 310, "y": 700}, {"x": 930, "y": 420}, {"x": 930, "y": 620}
+  ],
+  "plots": [
+    {
+      "id": "pn-1",
+      "plotNo": "P.N.1",
+      "areaSqYard": "117.00",
+      "dimensions": "35.3' x 30'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fecaca",
+      "points": [[380, 130], [450, 130], [450, 240], [380, 240]]
+    },
+    {
+      "id": "pn-2",
+      "plotNo": "P.N.2",
+      "areaSqYard": "126.00",
+      "dimensions": "36' x 30'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fecaca",
+      "points": [[455, 130], [530, 130], [530, 240], [455, 240]]
+    },
+    {
+      "id": "pn-3",
+      "plotNo": "P.N.3",
+      "areaSqYard": "132.00",
+      "dimensions": "39.6' x 30'",
+      "status": "booked",
+      "price": "₹6,800 / SQ.YD",
+      "fillColor": "#fecaca",
+      "points": [[535, 130], [610, 130], [610, 240], [535, 240]]
+    },
+    {
+      "id": "pn-4",
+      "plotNo": "P.N.4",
+      "areaSqYard": "110.00",
+      "dimensions": "22' x 45'",
+      "status": "sold",
+      "price": "₹7,000 / SQ.YD",
+      "fillColor": "#fecaca",
+      "points": [[615, 130], [680, 130], [680, 240], [615, 240]]
+    },
+    {
+      "id": "pn-5",
+      "plotNo": "P.N.5",
+      "areaSqYard": "105.00",
+      "dimensions": "21' x 45'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fecaca",
+      "points": [[685, 130], [750, 130], [750, 240], [685, 240]]
+    },
+    {
+      "id": "pn-6",
+      "plotNo": "P.N.6",
+      "areaSqYard": "95.00",
+      "dimensions": "37' x 23.11'",
+      "status": "available",
+      "price": "₹6,200 / SQ.YD",
+      "fillColor": "#fecaca",
+      "points": [[755, 130], [820, 130], [820, 240], [755, 240]]
+    },
+    {
+      "id": "pn-10",
+      "plotNo": "P.N.10",
+      "areaSqYard": "100.00",
+      "dimensions": "44.7' x 20.2'",
+      "status": "available",
+      "price": "₹6,000 / SQ.YD",
+      "fillColor": "#bfdbfe",
+      "points": [[380, 260], [480, 260], [480, 330], [380, 330]]
+    },
+    {
+      "id": "pn-11",
+      "plotNo": "P.N.11",
+      "areaSqYard": "102.00",
+      "dimensions": "42.2' x 21.9'",
+      "status": "booked",
+      "price": "₹6,000 / SQ.YD",
+      "fillColor": "#bfdbfe",
+      "points": [[380, 335], [480, 335], [480, 405], [380, 405]]
+    },
+    {
+      "id": "pn-12",
+      "plotNo": "P.N.12",
+      "areaSqYard": "99.00",
+      "dimensions": "38.6' x 23'",
+      "status": "available",
+      "price": "₹6,000 / SQ.YD",
+      "fillColor": "#bfdbfe",
+      "points": [[485, 260], [585, 260], [585, 330], [485, 330]]
+    },
+    {
+      "id": "pn-13",
+      "plotNo": "P.N.13",
+      "areaSqYard": "78.00",
+      "dimensions": "35.1' x 20'",
+      "status": "sold",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#bfdbfe",
+      "points": [[485, 335], [585, 335], [585, 405], [485, 405]]
+    },
+    {
+      "id": "pn-14",
+      "plotNo": "P.N.14",
+      "areaSqYard": "64.00",
+      "dimensions": "32.1' x 18'",
+      "status": "available",
+      "price": "₹6,000 / SQ.YD",
+      "fillColor": "#bfdbfe",
+      "points": [[590, 260], [690, 260], [690, 330], [590, 330]]
+    },
+    {
+      "id": "pn-15",
+      "plotNo": "P.N.15",
+      "areaSqYard": "60.00",
+      "dimensions": "30' x 18'",
+      "status": "available",
+      "price": "₹6,000 / SQ.YD",
+      "fillColor": "#bfdbfe",
+      "points": [[590, 335], [690, 335], [690, 405], [590, 405]]
+    },
+    {
+      "id": "pn-20",
+      "plotNo": "P.N.20",
+      "areaSqYard": "104.00",
+      "dimensions": "31.4' x 30'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fbcfe8",
+      "points": [[380, 440], [480, 440], [480, 510], [380, 510]]
+    },
+    {
+      "id": "pn-21",
+      "plotNo": "P.N.21",
+      "areaSqYard": "105.80",
+      "dimensions": "20.7' x 46'",
+      "status": "booked",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fbcfe8",
+      "points": [[380, 515], [480, 515], [480, 590], [380, 590]]
+    },
+    {
+      "id": "pn-22",
+      "plotNo": "P.N.22",
+      "areaSqYard": "87.00",
+      "dimensions": "11.8' x 66.6'",
+      "status": "sold",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fbcfe8",
+      "points": [[485, 440], [585, 440], [585, 510], [485, 510]]
+    },
+    {
+      "id": "pn-23",
+      "plotNo": "P.N.23",
+      "areaSqYard": "100.00",
+      "dimensions": "45' x 20'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#fbcfe8",
+      "points": [[485, 515], [585, 515], [585, 590], [485, 590]]
+    },
+    {
+      "id": "pn-25",
+      "plotNo": "P.N.25",
+      "areaSqYard": "100.00",
+      "dimensions": "45' x 20'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#e9d5ff",
+      "points": [[380, 640], [480, 640], [480, 750], [380, 750]]
+    },
+    {
+      "id": "pn-26",
+      "plotNo": "P.N.26",
+      "areaSqYard": "100.00",
+      "dimensions": "45' x 20'",
+      "status": "available",
+      "price": "₹6,500 / SQ.YD",
+      "fillColor": "#e9d5ff",
+      "points": [[485, 640], [585, 640], [585, 750], [485, 750]]
+    }
+  ]
+}

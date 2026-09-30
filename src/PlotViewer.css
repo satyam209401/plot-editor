@@ -1,0 +1,317 @@
+/* ==========================================================================
+   PlotViewer.css - Standalone Styles for 2D CAD Layout Map Viewer
+   ========================================================================== */
+
+:root {
+  --pv-font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --pv-bg-dark: #030712;
+  --pv-bg-panel: #111827;
+  --pv-bg-card: #1e293b;
+  --pv-border: #334155;
+  --pv-accent-blue: #3b82f6;
+  --pv-accent-cyan: #38bdf8;
+  --pv-accent-green: #22c55e;
+  --pv-accent-amber: #f59e0b;
+  --pv-accent-red: #ef4444;
+  --pv-text-main: #f8fafc;
+  --pv-text-muted: #94a3b8;
+}
+
+/* 👁️ Fullscreen Layout */
+.main-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  min-height: calc(100vh - 52px);
+  overflow: hidden;
+  position: relative;
+  background: var(--pv-bg-dark);
+  font-family: var(--pv-font);
+  color: var(--pv-text-main);
+  box-sizing: border-box;
+}
+
+.main-wrapper * {
+  box-sizing: border-box;
+}
+
+/* 🗺️ Canvas Container & Wrapper */
+.map-canvas-container {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pv-bg-dark);
+  cursor: default;
+}
+
+.map-wrapper {
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  transition: transform 0.05s ease-out;
+}
+
+.map-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.map-svg-overlay {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 🟩 Plots & Polygons */
+.plot-polygon {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plot-polygon:hover,
+.plot-polygon.selected {
+  stroke: var(--pv-accent-cyan) !important;
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+}
+
+.plot-polygon.available {
+  fill: rgba(34, 197, 94, 0.35);
+  stroke: var(--pv-accent-green);
+}
+
+.plot-polygon.booked {
+  fill: rgba(245, 158, 11, 0.4);
+  stroke: var(--pv-accent-amber);
+}
+
+.plot-polygon.sold {
+  fill: rgba(239, 68, 68, 0.4);
+  stroke: var(--pv-accent-red);
+}
+
+.plot-label {
+  font-family: var(--pv-font);
+  font-weight: 800;
+  font-size: 13px;
+  fill: #ffffff;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.plot-sublabel {
+  font-family: var(--pv-font);
+  font-weight: 700;
+  font-size: 8.5px;
+  fill: #f1f5f9;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+/* 📋 Inspector Sidebar Panel */
+.sidebar-panel {
+  width: 340px;
+  background: var(--pv-bg-panel);
+  border-left: 1px solid var(--pv-border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  z-index: 80;
+  overflow-y: auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-panel.collapsed {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  border-left: none;
+}
+
+.sidebar-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--pv-border);
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.sidebar-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--pv-text-main);
+}
+
+.sidebar-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  flex: 1;
+}
+
+/* 🔍 Search Input */
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--pv-bg-card);
+  border: 1px solid var(--pv-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  color: var(--pv-text-muted);
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--pv-text-main);
+  font-family: inherit;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+/* 🏷️ Filter Chips */
+.filter-badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.filter-chip {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--pv-border);
+  background: var(--pv-bg-card);
+  color: var(--pv-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-chip:hover {
+  background: #334155;
+  color: var(--pv-text-main);
+}
+
+.filter-chip.active {
+  background: var(--pv-accent-blue);
+  color: #ffffff;
+  border-color: var(--pv-accent-blue);
+}
+
+/* 💳 Selected Plot Card */
+.plot-details-card {
+  background: var(--pv-bg-card);
+  border: 1px solid var(--pv-border);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.detail-label {
+  color: var(--pv-text-muted);
+}
+
+.detail-value {
+  font-weight: 700;
+  color: var(--pv-text-main);
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge.available {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.badge.booked {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.badge.sold {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--pv-text-muted);
+}
+
+/* 🕹️ Floating Controls */
+.floating-controls {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 50;
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--pv-bg-card);
+  border: 1px solid var(--pv-border);
+  color: var(--pv-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.15s ease;
+}
+
+.control-btn:hover {
+  background: #334155;
+  border-color: var(--pv-accent-blue);
+  color: var(--pv-accent-cyan);
+}
+
+/* 📱 Responsive */
+@media (max-width: 900px) {
+  .sidebar-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 150;
+    width: 300px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
+  }
+}
