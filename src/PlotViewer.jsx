@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { ZoomIn, ZoomOut, RotateCcw, Search, Filter, MapPin, Compass, FileText, Layers, PanelRightClose, PanelRightOpen, Maximize2 } from 'lucide-react';
 import './PlotViewer.css';
-import { getRoadPath, getSmoothPath, getPolygonCentroid, getPointsString } from './utils/mapUtils.js';
+import { getRoadPath, getSmoothPath, getPolygonCentroid, getPointsString, getRoadSegmentLabels } from './utils/mapUtils.js';
 
-export { getRoadPath, getSmoothPath, getPolygonCentroid, getPointsString };
+export { getRoadPath, getSmoothPath, getPolygonCentroid, getPointsString, getRoadSegmentLabels };
 
 export default function PlotViewer({ data, onPlotSelect, showSidebar = true }) {
   const [zoom, setZoom] = useState(1);
@@ -148,6 +148,27 @@ export default function PlotViewer({ data, onPlotSelect, showSidebar = true }) {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
+                  {/* Road Segment-Aware Clean Text */}
+                  {getRoadSegmentLabels(road).map((label, lIdx) => (
+                    <text 
+                      key={lIdx}
+                      x={label.mx} 
+                      y={label.my} 
+                      transform={`rotate(${label.angle}, ${label.mx}, ${label.my})`}
+                      dy="4"
+                      style={{ 
+                        fontSize: "11px", 
+                        fontWeight: "800", 
+                        fill: "#f8fafc", 
+                        textAnchor: "middle", 
+                        pointerEvents: "none", 
+                        letterSpacing: "1px", 
+                        textShadow: "0 1px 3px rgba(0,0,0,0.9)" 
+                      }}
+                    >
+                      {label.text}
+                    </text>
+                  ))}
                 </g>
               );
             })}
@@ -351,6 +372,13 @@ export default function PlotViewer({ data, onPlotSelect, showSidebar = true }) {
                 <div className="detail-row">
                   <span className="detail-label">Price Rate:</span>
                   <span className="detail-value" style={{ color: '#4ade80' }}>{selectedPlot.price}</span>
+                </div>
+              )}
+
+              {selectedPlot.description && (
+                <div style={{ marginTop: '0.75rem', padding: '0.5rem', background: 'rgba(0,0,0,0.2)', borderRadius: '6px', borderLeft: '3px solid #38bdf8' }}>
+                  <span style={{ display: 'block', fontSize: '0.75rem', color: '#94a3b8', fontWeight: '700', marginBottom: '0.2rem' }}>Description / Remarks:</span>
+                  <span style={{ fontSize: '0.85rem', color: '#f8fafc', whiteSpace: 'pre-wrap' }}>{selectedPlot.description}</span>
                 </div>
               )}
             </div>

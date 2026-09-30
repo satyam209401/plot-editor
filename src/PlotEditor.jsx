@@ -1003,6 +1003,40 @@ export default function PlotEditor({ initialData, onSave }) {
                           </div>
 
                           <div className="form-group">
+                            <label className="form-label">Price Rate (Per Gaj/Sq.Yd)</label>
+                            <input 
+                              type="text" className="form-input" 
+                              placeholder="e.g. ₹2000 / Sq.Yd"
+                              value={activePlot.price || ''} 
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                const updatedPlots = mapData.plots.map(p => p.id === activePlot.id ? { ...p, price: val } : p);
+                                setMapData({ ...mapData, plots: updatedPlots });
+                                setSelectedElement({ ...selectedElement, item: { ...activePlot, price: val } });
+                              }}
+                              onBlur={() => pushHistory(mapData)}
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label className="form-label">Description / Remarks</label>
+                            <textarea 
+                              className="form-input" 
+                              rows="3"
+                              placeholder="Write plot details here..."
+                              value={activePlot.description || ''} 
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                const updatedPlots = mapData.plots.map(p => p.id === activePlot.id ? { ...p, description: val } : p);
+                                setMapData({ ...mapData, plots: updatedPlots });
+                                setSelectedElement({ ...selectedElement, item: { ...activePlot, description: val } });
+                              }}
+                              onBlur={() => pushHistory(mapData)}
+                              style={{ resize: 'vertical', minHeight: '60px' }}
+                            />
+                          </div>
+
+                          <div className="form-group">
                             <label className="form-label">Color Theme</label>
                             <select 
                               className="form-select"
