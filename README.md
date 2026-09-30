@@ -60,41 +60,54 @@ Components are **100% modular and decoupled** with separate CSS styles, allowing
 
 ## 📦 How to Use in External React Projects
 
-Both components are designed to be copied directly into any other React project (Vite, Next.js, Create React App):
+### Installation Method 1: Direct NPM install from GitHub (Recommended)
+```bash
+npm install git+https://github.com/satyam209401/plot-editor.git
+```
+Then import directly:
+```jsx
+import { PlotViewer, PlotEditor } from 'react-2d-plot-map';
+```
 
-### Option A: Using the Interactive Viewer
+### Installation Method 2: Copy-Paste Components
+Copy `PlotViewer.jsx`, `PlotViewer.css`, `PlotEditor.jsx`, `PlotEditor.css`, and `utils/mapUtils.js` into your project.
 
-Copy `src/PlotViewer.jsx`, `src/PlotViewer.css`, and `src/utils/mapUtils.js` into your project:
+---
+
+### 👁️ Using the Interactive Viewer (`PlotViewer`)
 
 ```jsx
 import React from 'react';
-import PlotViewer from './PlotViewer';
-
-const layoutData = {
-  projectTitle: "Green Valley Phase 1",
-  canvasWidth: 1300,
-  canvasHeight: 900,
-  plots: [
-    {
-      id: "plot-1",
-      plotNo: "P.N.1",
-      areaSqYard: "120.00",
-      dimensions: "30' x 40'",
-      status: "available",
-      points: [[100, 100], [220, 100], [220, 180], [100, 180]]
-    }
-  ],
-  roads: []
-};
+import { PlotViewer } from 'react-2d-plot-map'; // or import PlotViewer from './PlotViewer';
 
 export default function MasterPlanPage() {
+  const handlePlotSelect = (plot) => {
+    if (plot) {
+      console.log("Selected Plot:", plot.plotNo, plot.areaSqYard, plot.price);
+      // Trigger your custom modal, enquiry form, or booking drawer here!
+    } else {
+      console.log("Selection cleared");
+    }
+  };
+
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
-      <PlotViewer data={layoutData} />
+      <PlotViewer 
+        data={layoutData} 
+        onPlotSelect={handlePlotSelect} 
+        showSidebar={true} // Set to false to hide built-in sidebar and show only 2D map canvas
+      />
     </div>
   );
 }
 ```
+
+#### Viewer Props:
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `data` | `Object` | *Required* | Complete master plan layout JSON object |
+| `onPlotSelect` | `Function` | `undefined` | Callback fired when a plot is selected or cleared: `(plot) => void` |
+| `showSidebar` | `Boolean` | `true` | Show or hide the built-in property inspector sidebar |
 
 ### Option B: Using the CAD Studio Editor
 

@@ -1,8 +1,18 @@
 {
   "name": "react-2d-plot-map",
-  "private": true,
   "version": "1.0.0",
   "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./PlotViewer": "./src/PlotViewer.jsx",
+    "./PlotEditor": "./src/PlotEditor.jsx",
+    "./mapUtils": "./src/utils/mapUtils.js"
+  },
+  "files": [
+    "src"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

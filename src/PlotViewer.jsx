@@ -5,7 +5,7 @@ import { getRoadPath, getSmoothPath, getPolygonCentroid, getPointsString } from 
 
 export { getRoadPath, getSmoothPath, getPolygonCentroid, getPointsString };
 
-export default function PlotViewer({ data }) {
+export default function PlotViewer({ data, onPlotSelect, showSidebar = true }) {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -14,6 +14,16 @@ export default function PlotViewer({ data }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const handlePlotSelect = (plot) => {
+    setSelectedPlot(plot);
+    if (onPlotSelect) onPlotSelect(plot);
+  };
+
+  const handleClearSelection = () => {
+    setSelectedPlot(null);
+    if (onPlotSelect) onPlotSelect(null);
+  };
 
   const containerRef = useRef(null);
 
@@ -103,7 +113,7 @@ export default function PlotViewer({ data }) {
                 <path d="M 4 0 L 0 0 0 4" fill="none" stroke="#1e293b" strokeWidth="0.4" />
               </pattern>
             </defs>
-            <rect width="100%" height="100%" fill="url(#cad-grid)" onClick={() => setSelectedPlot(null)} style={{ cursor: 'default' }} />
+            <rect width="100%" height="100%" fill="url(#cad-grid)" onClick={handleClearSelection} style={{ cursor: 'default' }} />
 
             {data.projectTitle && (
               <g transform="translate(80, 55)">
@@ -166,7 +176,7 @@ export default function PlotViewer({ data }) {
               const isSelected = selectedPlot?.id === plot.id;
 
               return (
-                <g key={plot.id} onClick={(e) => { e.stopPropagation(); setSelectedPlot(plot); }}>
+                <g key={plot.id} onClick={(e) => { e.stopPropagation(); handlePlotSelect(plot); }}>
                   <polygon
                     points={getPointsString(plot.points)}
                     fill={plot.fillColor || (plot.status === 'available' ? '#22c55e44' : plot.status === 'booked' ? '#f59e0b44' : '#ef444444')}
@@ -202,14 +212,16 @@ export default function PlotViewer({ data }) {
 
         {/* Floating Controls */}
         <div className="floating-controls">
-          <button 
-            className="control-btn" 
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-            title={isSidebarOpen ? "Fullscreen Map View" : "Show Inspector Sidebar"}
-            style={{ background: isSidebarOpen ? '#1e293b' : '#3b82f6', color: '#ffffff' }}
-          >
-            {isSidebarOpen ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}
-          </button>
+          {showSidebar && (
+            <button 
+              className="control-btn" 
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+              title={isSidebarOpen ? "Fullscreen Map View" : "Show Inspector Sidebar"}
+              style={{ background: isSidebarOpen ? '#1e293b' : '#3b82f6', color: '#ffffff' }}
+            >
+              {isSidebarOpen ? <PanelRightClose size={18} /> : <PanelRightOpen size={18} />}
+            </button>
+          )}
           <button className="control-btn" onClick={handleZoomIn} title="Zoom In">
             <ZoomIn size={18} />
           </button>
@@ -223,7 +235,8 @@ export default function PlotViewer({ data }) {
       </div>
 
       {/* Sidebar Panel */}
-      <div className={`sidebar-panel ${isSidebarOpen ? '' : 'collapsed'}`}>
+      {showSidebar && (
+        <div className={`sidebar-panel ${isSidebarOpen ? '' : 'collapsed'}`}>
         <div className="sidebar-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div className="sidebar-title">
@@ -366,7 +379,7 @@ export default function PlotViewer({ data }) {
                   {filteredPlots.map((plot) => (
                     <tr 
                       key={plot.id}
-                      onClick={() => setSelectedPlot(plot)}
+                      onClick={() => handlePlotSelect(plot)}
                       style={{ 
                         borderBottom: '1px solid #1e293b', 
                         cursor: 'pointer',
@@ -383,7 +396,8 @@ export default function PlotViewer({ data }) {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
